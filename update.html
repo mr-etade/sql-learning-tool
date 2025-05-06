@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPDATE Command - SQL Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <h1>Western Pacific University</h1>
+            <h2>Declarative Programming Paradigm</h2>
+            <h3>CMN115/CBS105 - Introduction to Programming</h3>
+        </div>
+    </header>
+
+    <main class="command-page">
+        <div class="command-header">
+            <h2>UPDATE Command</h2>
+            <p>Modify existing records in a database table</p>
+        </div>
+
+        <section class="sql-examples">
+            <div class="example">
+                <h3>Basic UPDATE</h3>
+                <p>Change a student's grade:</p>
+                <div class="sql-code">
+                    UPDATE Students 
+                    SET Grade = 'A' 
+                    WHERE StudentID = 102;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'UPDATE Students SET Grade = \'A\' WHERE StudentID = 102;'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Multiple Fields</h3>
+                <p>Update a student's age and grade:</p>
+                <div class="sql-code">
+                    UPDATE Students 
+                    SET Age = 21, Grade = 'B' 
+                    WHERE StudentID = 104;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'UPDATE Students SET Age = 21, Grade = \'B\' WHERE StudentID = 104;'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Multiple Records</h3>
+                <p>Update all computer science courses:</p>
+                <div class="sql-code">
+                    UPDATE Courses 
+                    SET Department = 'Computer Science Dept' 
+                    WHERE Department = 'Computer Science';
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'UPDATE Courses SET Department = \'Computer Science Dept\' WHERE Department = \'Computer Science\';'">Try This Example</button>
+            </div>
+        </section>
+
+        <section class="sql-practice">
+            <h3>Try It Yourself</h3>
+            <div class="sql-editor">
+                <p>Enter your UPDATE query:</p>
+                <textarea placeholder="UPDATE Students SET Age = 22 WHERE StudentID = 101;"></textarea>
+                <button>Execute</button>
+                <div class="results"></div>
+            </div>
+            <div class="warning">
+                <p><strong>Warning:</strong> Always include a WHERE clause in your UPDATE statements unless you intend to update all records.</p>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Back to All Commands</a>
+    </main>
+
+    <footer>
+        <p>© 2025 Western Pacific University - IT Academic Department</p>
+        <p>Instructor: Mr. Eremas Tade</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

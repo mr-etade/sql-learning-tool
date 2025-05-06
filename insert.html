@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSERT Command - SQL Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <h1>Western Pacific University</h1>
+            <h2>Declarative Programming Paradigm</h2>
+            <h3>CMN115/CBS105 - Introduction to Programming</h3>
+        </div>
+    </header>
+
+    <main class="command-page">
+        <div class="command-header">
+            <h2>INSERT Command</h2>
+            <p>Add new records to a database table</p>
+        </div>
+
+        <section class="sql-examples">
+            <div class="example">
+                <h3>Basic INSERT</h3>
+                <p>Add a new student with all fields:</p>
+                <div class="sql-code">
+                    INSERT INTO Students (StudentID, FirstName, LastName, Age, Grade)
+                    VALUES (105, 'James', 'Wilson', 19, 'B');
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'INSERT INTO Students (StudentID, FirstName, LastName, Age, Grade) VALUES (105, \'James\', \'Wilson\', 19, \'B\');'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Partial INSERT</h3>
+                <p>Add a new student with only required fields:</p>
+                <div class="sql-code">
+                    INSERT INTO Students (StudentID, FirstName, LastName)
+                    VALUES (106, 'Emma', 'Davis');
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'INSERT INTO Students (StudentID, FirstName, LastName) VALUES (106, \'Emma\', \'Davis\');'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Multiple INSERT</h3>
+                <p>Add multiple students at once:</p>
+                <div class="sql-code">
+                    INSERT INTO Students (StudentID, FirstName, LastName, Grade)
+                    VALUES (107, 'Tom', 'Lee', 'A'),
+                           (108, 'Lisa', 'Chen', 'B');
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'INSERT INTO Students (StudentID, FirstName, LastName, Grade) VALUES (107, \'Tom\', \'Lee\', \'A\'), (108, \'Lisa\', \'Chen\', \'B\');'">Try This Example</button>
+            </div>
+        </section>
+
+        <section class="sql-practice">
+            <h3>Try It Yourself</h3>
+            <div class="sql-editor">
+                <p>Enter your INSERT query:</p>
+                <textarea placeholder="INSERT INTO Students (StudentID, FirstName) VALUES (109, 'Alex');"></textarea>
+                <button>Execute</button>
+                <div class="results"></div>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Back to All Commands</a>
+    </main>
+
+    <footer>
+        <p>© 2025 Western Pacific University - IT Academic Department</p>
+        <p>Instructor: Mr. Eremas Tade</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

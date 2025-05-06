@@ -1,0 +1,313 @@
+:root {
+    --wpu-blue: #00205B;
+    --wpu-gold: #FFD700;
+    --light-blue: #E6EFF9;
+    --light-gold: #FFF5D6;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: var(--wpu-blue);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: 8px solid var(--wpu-gold);
+}
+
+.logo-container h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+.logo-container h2 {
+    margin: 0.5rem 0 0;
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.intro {
+    background-color: var(--light-blue);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--wpu-blue);
+}
+
+.command-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.command-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    border-top: 4px solid var(--wpu-gold);
+}
+
+.command-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.command-card h3 {
+    color: var(--wpu-blue);
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.example-preview {
+    background-color: #f5f5f5;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
+}
+
+.database-info {
+    background-color: var(--light-gold);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    border-left: 4px solid var(--wpu-gold);
+}
+
+.table-definition {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.table-definition h4 {
+    color: var(--wpu-blue);
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+footer {
+    background-color: var(--wpu-blue);
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+/* Command page specific styles */
+.command-page {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.command-header {
+    background-color: var(--wpu-blue);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.command-header h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.command-header p {
+    margin: 0.5rem 0 0;
+    font-size: 1.1rem;
+}
+
+.sql-examples {
+    margin-bottom: 2rem;
+}
+
+.example {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.example h3 {
+    color: var(--wpu-blue);
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.sql-code {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.sql-editor {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 1.5rem 0;
+}
+
+.sql-editor textarea {
+    width: 100%;
+    min-height: 100px;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    border: 1px solid #333;
+    padding: 0.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    resize: vertical;
+    margin-bottom: 0.5rem;
+}
+
+.sql-editor button {
+    background-color: var(--wpu-gold);
+    color: var(--wpu-blue);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.sql-editor button:hover {
+    background-color: #e6c200;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+.results-table th, .results-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.results-table th {
+    background-color: var(--wpu-blue);
+    color: white;
+}
+
+.results-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: var(--wpu-blue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .command-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .logo-container h1 {
+        font-size: 2rem;
+    }
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background-color: #000;
+    color: #fff;
+}
+
+.results-table th, .results-table td {
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.results-table th {
+    background-color: #333;
+    color: var(--wpu-gold);
+}
+
+.results-table tr:nth-child(even) {
+    background-color: #222;
+}
+
+.results-table tr:hover {
+    background-color: #444;
+}
+
+.error {
+    color: #ff6b6b;
+    padding: 0.5rem;
+    background-color: #2a0a0a;
+    border-radius: 4px;
+}
+
+.success {
+    color: #6bff6b;
+    padding: 0.5rem;
+    background-color: #0a2a0a;
+    border-radius: 4px;
+}
+
+.info {
+    color: #6b6bff;
+    padding: 0.5rem;
+    background-color: #0a0a2a;
+    border-radius: 4px;
+}
+
+.try-button {
+    background-color: var(--wpu-gold);
+    color: var(--wpu-blue);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    margin-top: 0.5rem;
+}
+
+.try-button:hover {
+    background-color: #e6c200;
+}

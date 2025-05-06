@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COUNT Function - SQL Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <h1>Western Pacific University</h1>
+            <h2>Declarative Programming Paradigm</h2>
+            <h3>CMN115/CBS105 - Introduction to Programming</h3>
+        </div>
+    </header>
+
+    <main class="command-page">
+        <div class="command-header">
+            <h2>COUNT Function</h2>
+            <p>Count the number of rows matching specified criteria</p>
+        </div>
+
+        <section class="sql-examples">
+            <div class="example">
+                <h3>Basic COUNT</h3>
+                <p>Count all students:</p>
+                <div class="sql-code">
+                    SELECT COUNT(*) FROM Students;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT COUNT(*) FROM Students;'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>COUNT with WHERE</h3>
+                <p>Count students with grade A:</p>
+                <div class="sql-code">
+                    SELECT COUNT(*) FROM Students 
+                    WHERE Grade = 'A';
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT COUNT(*) FROM Students WHERE Grade = \'A\';'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>COUNT with Multiple Conditions</h3>
+                <p>Count students over age 20 with grade B or higher:</p>
+                <div class="sql-code">
+                    SELECT COUNT(*) FROM Students 
+                    WHERE Age > 20 AND Grade IN ('A', 'B');
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT COUNT(*) FROM Students WHERE Age > 20 AND Grade IN (\'A\', \'B\');'">Try This Example</button>
+            </div>
+        </section>
+
+        <section class="sql-practice">
+            <h3>Try It Yourself</h3>
+            <div class="sql-editor">
+                <p>Enter your COUNT query:</p>
+                <textarea placeholder="SELECT COUNT(*) FROM Courses WHERE Credits > 3;"></textarea>
+                <button>Execute</button>
+                <div class="results"></div>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Back to All Commands</a>
+    </main>
+
+    <footer>
+        <p>© 2025 Western Pacific University - IT Academic Department</p>
+        <p>Instructor: Mr. Eremas Tade</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

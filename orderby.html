@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORDER BY Clause - SQL Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <h1>Western Pacific University</h1>
+            <h2>Declarative Programming Paradigm</h2>
+            <h3>CMN115/CBS105 - Introduction to Programming</h3>
+        </div>
+    </header>
+
+    <main class="command-page">
+        <div class="command-header">
+            <h2>ORDER BY Clause</h2>
+            <p>Sort query results in ascending or descending order</p>
+        </div>
+
+        <section class="sql-examples">
+            <div class="example">
+                <h3>Basic ORDER BY</h3>
+                <p>Sort students by last name alphabetically:</p>
+                <div class="sql-code">
+                    SELECT FirstName, LastName FROM Students 
+                    ORDER BY LastName;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT FirstName, LastName FROM Students ORDER BY LastName;'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Descending Order</h3>
+                <p>Sort students by age (oldest first):</p>
+                <div class="sql-code">
+                    SELECT * FROM Students 
+                    ORDER BY Age DESC;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT * FROM Students ORDER BY Age DESC;'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Multiple Columns</h3>
+                <p>Sort students by grade (highest first), then by last name:</p>
+                <div class="sql-code">
+                    SELECT FirstName, LastName, Grade FROM Students 
+                    ORDER BY Grade DESC, LastName;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT FirstName, LastName, Grade FROM Students ORDER BY Grade DESC, LastName;'">Try This Example</button>
+            </div>
+        </section>
+
+        <section class="sql-practice">
+            <h3>Try It Yourself</h3>
+            <div class="sql-editor">
+                <p>Enter your query with ORDER BY clause:</p>
+                <textarea placeholder="SELECT * FROM Students ORDER BY Age;"></textarea>
+                <button>Execute</button>
+                <div class="results"></div>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Back to All Commands</a>
+    </main>
+
+    <footer>
+        <p>© 2025 Western Pacific University - IT Academic Department</p>
+        <p>Instructor: Mr. Eremas Tade</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

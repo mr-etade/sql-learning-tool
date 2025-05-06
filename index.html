@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Command Learning - CMN115/CBS105: Introduction to Programming</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <h1>CMN115/CBS105: Introduction to Programming</h1>
+            <h2>Week 11 - Declarative Programming</h2>
+        </div>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>SQL Command Learning Tool</h2>
+            <p>Welcome to the SQL command learning tool for this weeks topic, Declarative Programming. This interactive resource will help you practice and understand the basic SQL commands covered in your lectures.</p>
+            <p>Click on any of the command categories below to explore examples and try them out in the interactive SQL environment.</p>
+        </section>
+
+        <section class="command-grid">
+            <div class="command-card" onclick="location.href='select.html';">
+                <h3>SELECT</h3>
+                <p>Retrieve data from a database</p>
+                <div class="example-preview">
+                    <code>SELECT * FROM Students;</code>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="location.href='where.html';">
+                <h3>WHERE</h3>
+                <p>Filter results based on conditions</p>
+                <div class="example-preview">
+                    <code>SELECT * FROM Students WHERE Grade = 'A';</code>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="location.href='orderby.html';">
+                <h3>ORDER BY</h3>
+                <p>Sort query results</p>
+                <div class="example-preview">
+                    <code>SELECT * FROM Students ORDER BY LastName;</code>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="location.href='insert.html';">
+                <h3>INSERT</h3>
+                <p>Add new records to a table</p>
+                <div class="example-preview">
+                    <code>INSERT INTO Students VALUES (105, 'James', 'Wilson', 19, 'B');</code>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="location.href='update.html';">
+                <h3>UPDATE</h3>
+                <p>Modify existing records</p>
+                <div class="example-preview">
+                    <code>UPDATE Students SET Grade = 'A' WHERE StudentID = 102;</code>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="location.href='delete.html';">
+                <h3>DELETE</h3>
+                <p>Remove records from a table</p>
+                <div class="example-preview">
+                    <code>DELETE FROM Students WHERE StudentID = 108;</code>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="location.href='count.html';">
+                <h3>COUNT</h3>
+                <p>Count records matching criteria</p>
+                <div class="example-preview">
+                    <code>SELECT COUNT(*) FROM Students WHERE Grade = 'A';</code>
+                </div>
+            </div>
+
+            <div class="command-card" onclick="location.href='combined.html';">
+                <h3>Combined</h3>
+                <p>Use multiple clauses together</p>
+                <div class="example-preview">
+                    <code>SELECT * FROM Students WHERE Age > 20 ORDER BY Grade;</code>
+                </div>
+            </div>
+        </section>
+
+        <section class="database-info">
+            <h3>Sample Database Structure</h3>
+            <p>All examples use these sample tables:</p>
+            
+            <div class="table-definition">
+                <h4>Students</h4>
+                <ul>
+                    <li>StudentID (INTEGER, PRIMARY KEY)</li>
+                    <li>FirstName (TEXT)</li>
+                    <li>LastName (TEXT)</li>
+                    <li>Age (INTEGER)</li>
+                    <li>Grade (TEXT)</li>
+                </ul>
+            </div>
+            
+            <div class="table-definition">
+                <h4>Courses</h4>
+                <ul>
+                    <li>CourseID (TEXT, PRIMARY KEY)</li>
+                    <li>CourseName (TEXT)</li>
+                    <li>Credits (INTEGER)</li>
+                    <li>Department (TEXT)</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Western Pacific University - IT Academic Department</p>
+        <p>Instructor: Mr. Eremas Tade</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

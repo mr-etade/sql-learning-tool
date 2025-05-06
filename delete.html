@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELETE Command - SQL Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <h1>Western Pacific University</h1>
+            <h2>Declarative Programming Paradigm</h2>
+            <h3>CMN115/CBS105 - Introduction to Programming</h3>
+        </div>
+    </header>
+
+    <main class="command-page">
+        <div class="command-header">
+            <h2>DELETE Command</h2>
+            <p>Remove records from a database table</p>
+        </div>
+
+        <section class="sql-examples">
+            <div class="example">
+                <h3>Basic DELETE</h3>
+                <p>Remove a specific student:</p>
+                <div class="sql-code">
+                    DELETE FROM Students 
+                    WHERE StudentID = 108;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'DELETE FROM Students WHERE StudentID = 108;'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Conditional DELETE</h3>
+                <p>Delete students with grade F:</p>
+                <div class="sql-code">
+                    DELETE FROM Students 
+                    WHERE Grade = 'F';
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'DELETE FROM Students WHERE Grade = \'F\';'">Try This Example</button>
+            </div>
+
+            <div class="example">
+                <h3>Delete with NULL Condition</h3>
+                <p>Delete students with no grade:</p>
+                <div class="sql-code">
+                    DELETE FROM Students 
+                    WHERE Grade IS NULL;
+                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'DELETE FROM Students WHERE Grade IS NULL;'">Try This Example</button>
+            </div>
+        </section>
+
+        <section class="sql-practice">
+            <h3>Try It Yourself</h3>
+            <div class="sql-editor">
+                <p>Enter your DELETE query:</p>
+                <textarea placeholder="DELETE FROM Students WHERE Age > 21;"></textarea>
+                <button>Execute</button>
+                <div class="results"></div>
+            </div>
+            <div class="warning">
+                <p><strong>Warning:</strong> Always include a WHERE clause in your DELETE statements unless you intend to delete all records. This action cannot be undone.</p>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Back to All Commands</a>
+    </main>
+
+    <footer>
+        <p>© 2025 Western Pacific University - IT Academic Department</p>
+        <p>Instructor: Mr. Eremas Tade</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
