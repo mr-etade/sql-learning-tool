@@ -40,16 +40,6 @@
                 </div>
                 <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT COUNT(*) FROM Students WHERE Grade = \'A\';'">Try This Example</button>
             </div>
-
-            <div class="example">
-                <h3>COUNT with Multiple Conditions</h3>
-                <p>Count students over age 20 with grade B or higher:</p>
-                <div class="sql-code">
-                    SELECT COUNT(*) FROM Students 
-                    WHERE Age > 20 AND Grade IN ('A', 'B');
-                </div>
-                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT COUNT(*) FROM Students WHERE Age > 20 AND Grade IN (\'A\', \'B\');'">Try This Example</button>
-            </div>
         </section>
 
         <section class="sql-practice">
