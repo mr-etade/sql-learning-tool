@@ -3,115 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Command Learning - CMN115/CBS105: Introduction to Programming</title>
+    <title>Combined SQL Clauses - SQL Learning</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="logo-container">
-            <h1>CMN115/CBS105: Introduction to Programming</h1>
-            <h2>Week 11 - Declarative Programming</h2>
+            <h1>Western Pacific University</h1>
+            <h2>Declarative Programming Paradigm</h2>
+            <h3>CMN115/CBS105 - Introduction to Programming</h3>
         </div>
     </header>
 
-    <main>
-        <section class="intro">
-            <h2>SQL Command Learning Tool</h2>
-            <p>Welcome to the SQL command learning tool for this weeks topic, Declarative Programming. This interactive resource will help you practice and understand the basic SQL commands covered in your lectures.</p>
-            <p>Click on any of the command categories below to explore examples and try them out in the interactive SQL environment.</p>
-        </section>
+    <main class="command-page">
+        <div class="command-header">
+            <h2>Combined SQL Clauses</h2>
+            <p>Use multiple clauses together in a single query</p>
+        </div>
 
-        <section class="command-grid">
-            <div class="command-card" onclick="location.href='select.html';">
-                <h3>SELECT</h3>
-                <p>Retrieve data from a database</p>
-                <div class="example-preview">
-                    <code>SELECT * FROM Students;</code>
+        <section class="sql-examples">
+            <div class="example">
+                <h3>WHERE and ORDER BY</h3>
+                <p>Find A students, sorted by last name:</p>
+                <div class="sql-code">
+                    SELECT FirstName, LastName FROM Students 
+                    WHERE Grade = 'A' 
+                    ORDER BY LastName;
                 </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT FirstName, LastName FROM Students WHERE Grade = \'A\' ORDER BY LastName;'">Try This Example</button>
             </div>
 
-            <div class="command-card" onclick="location.href='where.html';">
-                <h3>WHERE</h3>
-                <p>Filter results based on conditions</p>
-                <div class="example-preview">
-                    <code>SELECT * FROM Students WHERE Grade = 'A';</code>
+            <div class="example">
+                <h3>Complex Combined Query</h3>
+                <p>Find students under 21, sorted by age (oldest first), then by last name:</p>
+                <div class="sql-code">
+                    SELECT * FROM Students 
+                    WHERE Age < 21 
+                    ORDER BY Age DESC, LastName;
                 </div>
-            </div>
-
-            <div class="command-card" onclick="location.href='orderby.html';">
-                <h3>ORDER BY</h3>
-                <p>Sort query results</p>
-                <div class="example-preview">
-                    <code>SELECT * FROM Students ORDER BY LastName;</code>
-                </div>
-            </div>
-
-            <div class="command-card" onclick="location.href='insert.html';">
-                <h3>INSERT</h3>
-                <p>Add new records to a table</p>
-                <div class="example-preview">
-                    <code>INSERT INTO Students VALUES (105, 'James', 'Wilson', 19, 'B');</code>
-                </div>
-            </div>
-
-            <div class="command-card" onclick="location.href='update.html';">
-                <h3>UPDATE</h3>
-                <p>Modify existing records</p>
-                <div class="example-preview">
-                    <code>UPDATE Students SET Grade = 'A' WHERE StudentID = 102;</code>
-                </div>
-            </div>
-
-            <div class="command-card" onclick="location.href='delete.html';">
-                <h3>DELETE</h3>
-                <p>Remove records from a table</p>
-                <div class="example-preview">
-                    <code>DELETE FROM Students WHERE StudentID = 108;</code>
-                </div>
-            </div>
-
-            <div class="command-card" onclick="location.href='count.html';">
-                <h3>COUNT</h3>
-                <p>Count records matching criteria</p>
-                <div class="example-preview">
-                    <code>SELECT COUNT(*) FROM Students WHERE Grade = 'A';</code>
-                </div>
-            </div>
-
-            <div class="command-card" onclick="location.href='combined.html';">
-                <h3>Combined</h3>
-                <p>Use multiple clauses together</p>
-                <div class="example-preview">
-                    <code>SELECT * FROM Students WHERE Age > 20 ORDER BY Grade;</code>
-                </div>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT * FROM Students WHERE Age < 21 ORDER BY Age DESC, LastName;'">Try This Example</button>
             </div>
         </section>
 
-        <section class="database-info">
-            <h3>Sample Database Structure</h3>
-            <p>All examples use these sample tables:</p>
-            
-            <div class="table-definition">
-                <h4>Students</h4>
-                <ul>
-                    <li>StudentID (INTEGER, PRIMARY KEY)</li>
-                    <li>FirstName (TEXT)</li>
-                    <li>LastName (TEXT)</li>
-                    <li>Age (INTEGER)</li>
-                    <li>Grade (TEXT)</li>
-                </ul>
-            </div>
-            
-            <div class="table-definition">
-                <h4>Courses</h4>
-                <ul>
-                    <li>CourseID (TEXT, PRIMARY KEY)</li>
-                    <li>CourseName (TEXT)</li>
-                    <li>Credits (INTEGER)</li>
-                    <li>Department (TEXT)</li>
-                </ul>
+        <section class="sql-practice">
+            <h3>Try It Yourself</h3>
+            <div class="sql-editor">
+                <p>Enter your combined query:</p>
+                <textarea placeholder="SELECT * FROM Students WHERE Grade = 'A' ORDER BY LastName;"></textarea>
+                <button>Execute</button>
+                <div class="results"></div>
             </div>
         </section>
+
+        <a href="index.html" class="back-link">← Back to All Commands</a>
     </main>
 
     <footer>
