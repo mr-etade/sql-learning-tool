@@ -31,26 +31,6 @@
                 </div>
                 <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT FirstName, LastName FROM Students WHERE Grade = \'A\';'">Try This Example</button>
             </div>
-
-            <div class="example">
-                <h3>Numeric Comparison</h3>
-                <p>Find students age 20 or older:</p>
-                <div class="sql-code">
-                    SELECT * FROM Students 
-                    WHERE Age >= 20;
-                </div>
-                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT * FROM Students WHERE Age >= 20;'">Try This Example</button>
-            </div>
-
-            <div class="example">
-                <h3>Multiple Conditions</h3>
-                <p>Find A students age 20 or older:</p>
-                <div class="sql-code">
-                    SELECT * FROM Students 
-                    WHERE Grade = 'A' AND Age >= 20;
-                </div>
-                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT * FROM Students WHERE Grade = \'A\' AND Age >= 20;'">Try This Example</button>
-            </div>
         </section>
 
         <section class="sql-practice">
