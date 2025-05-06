@@ -48,7 +48,7 @@ function executeSQL(query) {
 
 function handleSelect(query) {
     // Parse SELECT query
-    const selectRegex = /^SELECT\s+(.+?)\s+FROM\s+(\w+)(?:\s+WHERE\s+(.+?))?(?:\s+ORDER\s+BY\s+(.+?)(?:\s+(ASC|DESC))?)?;?$/i;
+    const selectRegex = /^SELECT\s+(.+?)\s+FROM\s+(\w+)(?:\s+WHERE\s+(.+?))?(?:\s+ORDER\s+BY\s+(.+?))?;?$/i;
     const match = query.match(selectRegex);
     
     if (!match) {
@@ -58,8 +58,14 @@ function handleSelect(query) {
     const columns = match[1].trim();
     const tableName = match[2].trim();
     const whereClause = match[3] ? match[3].trim() : null;
-    const orderBy = match[4] ? match[4].trim() : null;
-    const orderDirection = match[5] ? match[5].trim().toUpperCase() : 'ASC';
+    let orderBy = match[4] ? match[4].trim() : null;
+    let orderDirection = 'ASC';
+    
+    // Handle ORDER BY with DESC
+    if (orderBy && orderBy.toUpperCase().includes(' DESC')) {
+        orderBy = orderBy.replace(/\s+DESC$/i, '');
+        orderDirection = 'DESC';
+    }
     
     // Get the table
     if (!database[tableName]) {
@@ -75,18 +81,32 @@ function handleSelect(query) {
     
     // Apply ORDER BY if present
     if (orderBy) {
-        const orderColumns = orderBy.split(',').map(col => col.trim());
+        const orderColumns = orderBy.split(',').map(col => {
+            let colName = col.trim();
+            let colDirection = orderDirection;
+            
+            if (colName.toUpperCase().endsWith(' DESC')) {
+                colName = colName.replace(/\s+DESC$/i, '').trim();
+                colDirection = 'DESC';
+            } else if (colName.toUpperCase().endsWith(' ASC')) {
+                colName = colName.replace(/\s+ASC$/i, '').trim();
+                colDirection = 'ASC';
+            }
+            
+            return { name: colName, direction: colDirection };
+        });
+        
         results.sort((a, b) => {
             for (const col of orderColumns) {
-                const aValue = a[col];
-                const bValue = b[col];
+                const aValue = a[col.name];
+                const bValue = b[col.name];
                 
                 if (aValue !== bValue) {
                     if (typeof aValue === 'number' && typeof bValue === 'number') {
-                        return orderDirection === 'ASC' ? aValue - bValue : bValue - aValue;
+                        return col.direction === 'ASC' ? aValue - bValue : bValue - aValue;
                     }
-                    if (aValue < bValue) return orderDirection === 'ASC' ? -1 : 1;
-                    if (aValue > bValue) return orderDirection === 'ASC' ? 1 : -1;
+                    if (aValue < bValue) return col.direction === 'ASC' ? -1 : 1;
+                    if (aValue > bValue) return col.direction === 'ASC' ? 1 : -1;
                 }
             }
             return 0;
@@ -116,7 +136,7 @@ function handleSelect(query) {
 }
 
 function evaluateWhere(row, whereClause) {
-    // Handle IS NULL condition first
+    // Handle IS NULL condition
     const isNullMatch = whereClause.match(/(\w+)\s+IS\s+NULL/i);
     if (isNullMatch) {
         const column = isNullMatch[1];
@@ -127,22 +147,77 @@ function evaluateWhere(row, whereClause) {
     const inMatch = whereClause.match(/(\w+)\s+IN\s*\((.+?)\)/i);
     if (inMatch) {
         const column = inMatch[1];
-        const values = inMatch[2].split(',').map(v => v.trim().replace(/^['"](.+?)['"]$/, '$1'));
-        return values.includes(String(row[column]));
+        const valuesString = inMatch[2];
+        // Split by comma but respect quotes
+        const values = [];
+        let currentValue = '';
+        let inQuote = false;
+        let quoteChar = '';
+        
+        for (let i = 0; i < valuesString.length; i++) {
+            const char = valuesString[i];
+            
+            if ((char === "'" || char === '"') && (i === 0 || valuesString[i-1] !== '\\')) {
+                if (!inQuote) {
+                    inQuote = true;
+                    quoteChar = char;
+                } else if (char === quoteChar) {
+                    inQuote = false;
+                    values.push(currentValue);
+                    currentValue = '';
+                    // Skip the next comma
+                    if (i + 1 < valuesString.length && valuesString[i + 1] === ',') {
+                        i++;
+                    }
+                } else {
+                    currentValue += char;
+                }
+            } else if (char === ',' && !inQuote) {
+                if (currentValue.trim() !== '') {
+                    values.push(currentValue.trim());
+                }
+                currentValue = '';
+            } else {
+                currentValue += char;
+            }
+        }
+        
+        if (currentValue.trim() !== '') {
+            values.push(currentValue.trim());
+        }
+        
+        // Clean up quotes from values
+        const cleanValues = values.map(v => {
+            const trimmed = v.trim();
+            if ((trimmed.startsWith("'") && trimmed.endsWith("'")) || 
+                (trimmed.startsWith('"') && trimmed.endsWith('"'))) {
+                return trimmed.slice(1, -1);
+            }
+            return trimmed;
+        });
+        
+        return cleanValues.includes(String(row[column]));
     }
 
     // Handle other conditions
     const conditions = whereClause.split(/\s+AND\s+/i);
     
     return conditions.every(condition => {
-        const operatorMatch = condition.match(/(\w+)\s*(=|!=|>|<|>=|<=)\s*(['"]?)(.+?)\3$/);
+        const operatorRegex = /(\w+)\s*(=|!=|>|<|>=|<=)\s*(['"]?)(.+?)\3$/;
+        const operatorMatch = condition.match(operatorRegex);
         if (!operatorMatch) {
             throw new Error(`Invalid WHERE condition: ${condition}`);
         }
         
         const column = operatorMatch[1];
         const operator = operatorMatch[2];
-        const value = operatorMatch[4];
+        let value = operatorMatch[4];
+        
+        // Handle quoted values
+        if ((value.startsWith("'") && value.endsWith("'")) || 
+            (value.startsWith('"') && value.endsWith('"'))) {
+            value = value.slice(1, -1);
+        }
         
         const rowValue = row[column];
         if (rowValue === undefined) {
@@ -150,7 +225,7 @@ function evaluateWhere(row, whereClause) {
         }
         
         // Compare based on type
-        if (!isNaN(rowValue)) {
+        if (!isNaN(value) && !isNaN(rowValue)) {
             // Numeric comparison
             const numValue = parseFloat(value);
             const rowNum = parseFloat(rowValue);
@@ -176,7 +251,7 @@ function evaluateWhere(row, whereClause) {
 }
 
 function handleInsert(query) {
-    // Parse INSERT query
+    // Parse INSERT query for both single and multiple rows
     const insertRegex = /^INSERT\s+INTO\s+(\w+)\s*(?:\((.+?)\))?\s*VALUES\s*\((.+?)\)(?:\s*,\s*\((.+?)\))*;?$/i;
     const match = query.match(insertRegex);
     
@@ -185,20 +260,86 @@ function handleInsert(query) {
     }
     
     const tableName = match[1].trim();
-    const columns = match[2] ? match[2].split(',').map(col => col.trim()) : null;
-    const valueGroups = [match[3]];
-    if (match[4]) valueGroups.push(match[4]);
+    let columns = match[2] ? match[2].split(',').map(col => col.trim()) : null;
     
     // Get the table
     if (!database[tableName]) {
         throw new Error(`Table '${tableName}' does not exist`);
     }
     
+    // Extract all value groups using a different approach
+    const valuesPattern = /VALUES\s*(\(.*\)(?:\s*,\s*\(.*\))*)$/is;
+    const valuesMatch = query.match(valuesPattern);
+    
+    if (!valuesMatch) {
+        throw new Error("Invalid VALUES syntax");
+    }
+    
+    const valuesPart = valuesMatch[1];
+    // Find all parentheses groups
+    const valueGroups = [];
+    let depth = 0;
+    let start = -1;
+    
+    for (let i = 0; i < valuesPart.length; i++) {
+        if (valuesPart[i] === '(') {
+            if (depth === 0) {
+                start = i;
+            }
+            depth++;
+        } else if (valuesPart[i] === ')') {
+            depth--;
+            if (depth === 0) {
+                valueGroups.push(valuesPart.substring(start + 1, i));
+            }
+        }
+    }
+    
+    // If no columns are specified, use all columns from the table
+    if (!columns) {
+        if (database[tableName].length > 0) {
+            columns = Object.keys(database[tableName][0]);
+        } else {
+            throw new Error("Cannot determine column structure for empty table");
+        }
+    }
+    
     // Process each value group
     const newRows = [];
     
     for (const valueGroup of valueGroups) {
-        const values = valueGroup.split(',').map(val => {
+        // Split values but respect quotes
+        const values = [];
+        let currentValue = '';
+        let inQuote = false;
+        let quoteChar = '';
+        
+        for (let i = 0; i < valueGroup.length; i++) {
+            const char = valueGroup[i];
+            
+            if ((char === "'" || char === '"') && (i === 0 || valueGroup[i-1] !== '\\')) {
+                if (!inQuote) {
+                    inQuote = true;
+                    quoteChar = char;
+                } else if (char === quoteChar) {
+                    inQuote = false;
+                } else {
+                    currentValue += char;
+                }
+            } else if (char === ',' && !inQuote) {
+                values.push(currentValue.trim());
+                currentValue = '';
+            } else if (!(char === ' ' && currentValue === '')) {
+                currentValue += char;
+            }
+        }
+        
+        if (currentValue.trim() !== '') {
+            values.push(currentValue.trim());
+        }
+        
+        // Process values
+        const processedValues = values.map(val => {
             const trimmed = val.trim();
             // Remove surrounding quotes if present
             if ((trimmed.startsWith("'") && trimmed.endsWith("'")) || 
@@ -208,33 +349,15 @@ function handleInsert(query) {
             return isNaN(trimmed) ? trimmed : parseFloat(trimmed);
         });
         
+        // Check if columns and values match
+        if (columns.length !== processedValues.length) {
+            throw new Error("Number of columns doesn't match number of values");
+        }
+        
         // Create new row
         const newRow = {};
-        
-        if (columns) {
-            // Insert with specified columns
-            if (columns.length !== values.length) {
-                throw new Error("Number of columns doesn't match number of values");
-            }
-            
-            for (let i = 0; i < columns.length; i++) {
-                newRow[columns[i]] = values[i];
-            }
-        } else {
-            // Insert with all columns (assuming order matches table structure)
-            const firstRow = database[tableName][0];
-            if (!firstRow) {
-                throw new Error("Cannot determine column order for empty table");
-            }
-            
-            const tableColumns = Object.keys(firstRow);
-            if (tableColumns.length !== values.length) {
-                throw new Error("Number of values doesn't match table columns");
-            }
-            
-            for (let i = 0; i < tableColumns.length; i++) {
-                newRow[tableColumns[i]] = values[i];
-            }
+        for (let i = 0; i < columns.length; i++) {
+            newRow[columns[i]] = processedValues[i];
         }
         
         newRows.push(newRow);
