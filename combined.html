@@ -34,17 +34,6 @@
             </div>
 
             <div class="example">
-                <h3>Multiple Conditions with Sorting</h3>
-                <p>Find courses with 3+ credits, sorted by name:</p>
-                <div class="sql-code">
-                    SELECT CourseName, Credits FROM Courses 
-                    WHERE Credits >= 3 
-                    ORDER BY CourseName;
-                </div>
-                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT CourseName, Credits FROM Courses WHERE Credits >= 3 ORDER BY CourseName;'">Try This Example</button>
-            </div>
-
-            <div class="example">
                 <h3>Complex Combined Query</h3>
                 <p>Find students under 21, sorted by age (oldest first), then by last name:</p>
                 <div class="sql-code">
