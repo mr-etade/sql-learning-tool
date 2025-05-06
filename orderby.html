@@ -47,9 +47,9 @@
                 <p>Sort students by grade (highest first), then by last name:</p>
                 <div class="sql-code">
                     SELECT FirstName, LastName, Grade FROM Students 
-                    ORDER BY Grade DESC, LastName;
+                    ORDER BY Grade ASC, LastName;
                 </div>
-                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT FirstName, LastName, Grade FROM Students ORDER BY Grade DESC, LastName;'">Try This Example</button>
+                <button class="try-button" onclick="document.querySelector('.sql-editor textarea').value = 'SELECT FirstName, LastName, Grade FROM Students ORDER BY Grade ASC, LastName;'">Try This Example</button>
             </div>
         </section>
 
